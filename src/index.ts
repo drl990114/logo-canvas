@@ -1,6 +1,6 @@
 'use strict'
 
-import defaults, { options, shape } from './default'
+import defaults, { noEmptyOptions, options, shape } from './default'
 import { measureOffsets } from './utils'
 
 export class Logo {
@@ -15,9 +15,9 @@ export class Logo {
   public fontFamily: string
   public fontSize: number
 
-  constructor (options: options) {
-    const data = Object.assign({}, defaults, options)
-    this.canvas = data.canvas
+  constructor (options: options = defaults) {
+    const data = Object.assign({}, defaults, options) as noEmptyOptions
+    this.canvas = (data.canvas != null) ? data.canvas : (document.createElement('camvas') as HTMLCanvasElement)
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
     this.width = data.width
     this.height = data.height
@@ -29,9 +29,15 @@ export class Logo {
     this.fontSize = data.fontSize
     this.canvas.width = 2 * this.width
     this.canvas.height = 2 * this.height
-    this.canvas.style.width = `${this.width}px`
-    this.canvas.style.height = `${this.height}px`
+    // this.canvas.style.width = `${this.width}px`
+    // this.canvas.style.height = `${this.height}px`
     this.ctx.scale(2, 2)
+  }
+
+  save (): void {
+    this.drawBackground()
+    this.drawText()
+    console.log('canvas', this.canvas)
   }
 
   drawText (): void {

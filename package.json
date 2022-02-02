@@ -8,10 +8,11 @@
   },
   "scripts": {
     "commit": "cz",
-    "start": "ts-node bin/logo.ts",
+    "start": "node bin/logo.js",
     "build": "yarn clear && rollup -c",
     "clear": "rimraf dist",
-    "lint": "eslint --ext js,ts,tsx ."
+    "lint": "eslint --ext js,ts,tsx .",
+    "dev": "rollup -cw --environment TARGET:src"
   },
   "repository": {
     "type": "git",
@@ -43,12 +44,15 @@
     "rollup-plugin-typescript2": "^0.31.1",
     "standard": "^16.0.4",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.5",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "canvas": "^2.9.0"
   }
 }
