@@ -9,15 +9,21 @@ export class Logo {
   public width: number
   public height: number
   public shape: shape
-  public fontColor
-  public backgroundColor
+  public fontColor: string | CanvasGradient | CanvasPattern
+  public backgroundColor: string | CanvasGradient | CanvasPattern
   public text: string
   public fontFamily: string
   public fontSize: number
+  public createCanvas: Function
 
   constructor (options: options = defaults) {
     const data = Object.assign({}, defaults, options) as noEmptyOptions
-    this.canvas = (data.canvas != null) ? data.canvas : (document.createElement('camvas') as HTMLCanvasElement)
+    this.canvas =
+      data.canvas != null ? data.canvas : document.createElement('canvas')
+    this.createCanvas =
+      data.createCanvas != null
+        ? data.createCanvas
+        : () => document.createElement('canvas')
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
     this.width = data.width
     this.height = data.height
@@ -29,23 +35,31 @@ export class Logo {
     this.fontSize = data.fontSize
     this.canvas.width = 2 * this.width
     this.canvas.height = 2 * this.height
-    // this.canvas.style.width = `${this.width}px`
-    // this.canvas.style.height = `${this.height}px`
+    if (typeof window !== 'undefined') {
+      this.canvas.style.width = `${this.width}px`
+      this.canvas.style.height = `${this.height}px`
+    }
+
     this.ctx.scale(2, 2)
   }
 
-  save (): void {
+  drawLogo (): HTMLCanvasElement {
     this.drawBackground()
     this.drawText()
-    console.log('canvas', this.canvas)
+    return this.canvas
   }
 
   drawText (): void {
     this.ctx.fillStyle = this.fontColor
-    this.ctx.font = `${this.fontSize}px${this.fontFamily}`
+    this.ctx.font = `${this.fontSize}px ${this.fontFamily}`
     this.ctx.textBaseline = 'alphabetic'
     this.ctx.textAlign = 'center'
-    const offsets = measureOffsets(this.text, this.fontFamily, this.fontSize, this.canvas, this.ctx)
+    const offsets = measureOffsets(
+      this.text,
+      this.fontFamily,
+      this.fontSize,
+      this.createCanvas
+    )
     const x = this.width / 2 + offsets.horizontal
     const y = this.height / 2 + offsets.vertical
     this.ctx.fillText(this.text, x, y)
@@ -72,7 +86,14 @@ export class Logo {
 
   drawCircle (): void {
     this.ctx.beginPath()
-    this.ctx.arc(this.width / 2, this.height / 2, this.height / 2, 0, 2 * Math.PI, false)
+    this.ctx.arc(
+      this.width / 2,
+      this.height / 2,
+      this.height / 2,
+      0,
+      2 * Math.PI,
+      false
+    )
     this.ctx.fillStyle = this.backgroundColor
     this.ctx.fill()
   }
