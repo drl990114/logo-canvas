@@ -6,15 +6,19 @@ export function measureOffsets (
   text: string,
   fontFamily: string,
   fontSize: number,
-  canvas,
-  ctx
+  createCanvas: Function
 ): offsets {
-  ctx.font = `${fontSize}px${fontFamily}`
+  const canvas = createCanvas()
+  const ctx = canvas.getContext('2d')
+  ctx.font = `${fontSize}px ${fontFamily}`
 
   canvas.width = 2 * ctx.measureText(text).width
   canvas.height = 2 * fontSize
+  ctx.font = `${fontSize}px ${fontFamily}`
+  canvas.width = 2 * ctx.measureText(text).width
+  canvas.height = 2 * fontSize
 
-  ctx.font = `${fontSize}px${fontFamily}`
+  ctx.font = `${fontSize}px ${fontFamily}`
   ctx.textBaseline = 'alphabetic'
   ctx.textAlign = 'center'
   ctx.fillStyle = 'white'
@@ -37,7 +41,6 @@ export function measureOffsets (
       }
     }
   }
-
   const canvasHorizontalCenterLine = canvas.height / 2
   const textHorizontalCenterLine = (textBottom - textTop) / 2 + textTop
 
@@ -49,7 +52,7 @@ export function measureOffsets (
       const rValue = data[rIndex]
 
       if (rValue === 255) {
-        if (textTop === 0) {
+        if (textLeft === 0) {
           textLeft = x
         }
         textRight = x
