@@ -10,6 +10,7 @@ export interface noEmptyOptions {
     text: string;
     fontFamily: string;
     fontSize: number;
+    createCanvas: Function | undefined;
 }
 declare type Copy<T> = {
     [K in keyof T]?: T[K];

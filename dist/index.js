@@ -1,11 +1,10 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.logo = {}));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Logo = {}));
 })(this, (function (exports) { 'use strict';
 
   var defaults = {
-      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       canvas: null,
       width: 128,
       height: 128,
@@ -17,11 +16,16 @@
       fontSize: 64
   };
 
-  function measureOffsets(text, fontFamily, fontSize, canvas, ctx) {
-      ctx.font = "".concat(fontSize, "px").concat(fontFamily);
+  function measureOffsets(text, fontFamily, fontSize, createCanvas) {
+      var canvas = createCanvas();
+      var ctx = canvas.getContext('2d');
+      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
       canvas.width = 2 * ctx.measureText(text).width;
       canvas.height = 2 * fontSize;
-      ctx.font = "".concat(fontSize, "px").concat(fontFamily);
+      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+      canvas.width = 2 * ctx.measureText(text).width;
+      canvas.height = 2 * fontSize;
+      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
       ctx.textBaseline = 'alphabetic';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'white';
@@ -51,7 +55,7 @@
               var rIndex = 4 * (canvas.width * y + x);
               var rValue = data[rIndex];
               if (rValue === 255) {
-                  if (textTop === 0) {
+                  if (textLeft === 0) {
                       textLeft = x;
                   }
                   textRight = x;
@@ -71,7 +75,12 @@
       function Logo(options) {
           if (options === void 0) { options = defaults; }
           var data = Object.assign({}, defaults, options);
-          this.canvas = (data.canvas != null) ? data.canvas : document.createElement('camvas');
+          this.canvas =
+              data.canvas != null ? data.canvas : document.createElement('canvas');
+          this.createCanvas =
+              data.createCanvas != null
+                  ? data.createCanvas
+                  : function () { return document.createElement('canvas'); };
           this.ctx = this.canvas.getContext('2d');
           this.width = data.width;
           this.height = data.height;
@@ -83,21 +92,23 @@
           this.fontSize = data.fontSize;
           this.canvas.width = 2 * this.width;
           this.canvas.height = 2 * this.height;
-          // this.canvas.style.width = `${this.width}px`
-          // this.canvas.style.height = `${this.height}px`
+          if (typeof window !== 'undefined') {
+              this.canvas.style.width = "".concat(this.width, "px");
+              this.canvas.style.height = "".concat(this.height, "px");
+          }
           this.ctx.scale(2, 2);
       }
-      Logo.prototype.save = function () {
+      Logo.prototype.drawLogo = function () {
           this.drawBackground();
           this.drawText();
-          console.log('canvas', this.canvas);
+          return this.canvas;
       };
       Logo.prototype.drawText = function () {
           this.ctx.fillStyle = this.fontColor;
-          this.ctx.font = "".concat(this.fontSize, "px").concat(this.fontFamily);
+          this.ctx.font = "".concat(this.fontSize, "px ").concat(this.fontFamily);
           this.ctx.textBaseline = 'alphabetic';
           this.ctx.textAlign = 'center';
-          var offsets = measureOffsets(this.text, this.fontFamily, this.fontSize, this.canvas, this.ctx);
+          var offsets = measureOffsets(this.text, this.fontFamily, this.fontSize, this.createCanvas);
           var x = this.width / 2 + offsets.horizontal;
           var y = this.height / 2 + offsets.vertical;
           this.ctx.fillText(this.text, x, y);

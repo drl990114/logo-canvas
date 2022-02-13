@@ -5,7 +5,7 @@ export default {
   input: './src/index.ts',
   output: [
     {
-      name: 'logo',
+      name: 'Logo',
       file: 'dist/index.js',
       format: 'umd',
       sourcemap: true

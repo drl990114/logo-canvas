@@ -5,13 +5,14 @@ export declare class Logo {
     width: number;
     height: number;
     shape: shape;
-    fontColor: any;
-    backgroundColor: any;
+    fontColor: string | CanvasGradient | CanvasPattern;
+    backgroundColor: string | CanvasGradient | CanvasPattern;
     text: string;
     fontFamily: string;
     fontSize: number;
+    createCanvas: Function;
     constructor(options?: options);
-    save(): void;
+    drawLogo(): HTMLCanvasElement;
     drawText(): void;
     drawRounded(): void;
     drawSquare(): void;
