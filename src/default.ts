@@ -20,6 +20,7 @@ export interface noEmptyOptions {
   text: string
   fontFamily: string
   fontSize: number
+  createCanvas: Function | undefined
 }
 type Copy<T> = { [K in keyof T]?: T[K] }
 export type options = Copy<noEmptyOptions>
