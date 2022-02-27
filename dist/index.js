@@ -1,10 +1,10 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Logo = {}));
-})(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Logo = factory());
+})(this, (function () { 'use strict';
 
-  var defaults = {
+  const defaults = {
       canvas: null,
       width: 128,
       height: 128,
@@ -17,26 +17,26 @@
   };
 
   function measureOffsets(text, fontFamily, fontSize, createCanvas) {
-      var canvas = createCanvas();
-      var ctx = canvas.getContext('2d');
-      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+      const canvas = createCanvas();
+      const ctx = canvas.getContext('2d');
+      ctx.font = `${fontSize}px ${fontFamily}`;
       canvas.width = 2 * ctx.measureText(text).width;
       canvas.height = 2 * fontSize;
-      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+      ctx.font = `${fontSize}px ${fontFamily}`;
       canvas.width = 2 * ctx.measureText(text).width;
       canvas.height = 2 * fontSize;
-      ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+      ctx.font = `${fontSize}px ${fontFamily}`;
       ctx.textBaseline = 'alphabetic';
       ctx.textAlign = 'center';
       ctx.fillStyle = 'white';
       ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-      var data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-      var textTop = 0;
-      var textBottom = 0;
-      for (var y = 0; y <= canvas.height; y++) {
-          for (var x = 0; x <= canvas.width; x++) {
-              var rIndex = 4 * (canvas.width * y + x);
-              var rValue = data[rIndex];
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let textTop = 0;
+      let textBottom = 0;
+      for (let y = 0; y <= canvas.height; y++) {
+          for (let x = 0; x <= canvas.width; x++) {
+              const rIndex = 4 * (canvas.width * y + x);
+              const rValue = data[rIndex];
               if (rValue === 255) {
                   if (textTop === 0) {
                       textTop = y;
@@ -46,14 +46,14 @@
               }
           }
       }
-      var canvasHorizontalCenterLine = canvas.height / 2;
-      var textHorizontalCenterLine = (textBottom - textTop) / 2 + textTop;
-      var textLeft = 0;
-      var textRight = 0;
-      for (var x = 0; x <= canvas.width; x++) {
-          for (var y = 0; y <= canvas.height; y++) {
-              var rIndex = 4 * (canvas.width * y + x);
-              var rValue = data[rIndex];
+      const canvasHorizontalCenterLine = canvas.height / 2;
+      const textHorizontalCenterLine = (textBottom - textTop) / 2 + textTop;
+      let textLeft = 0;
+      let textRight = 0;
+      for (let x = 0; x <= canvas.width; x++) {
+          for (let y = 0; y <= canvas.height; y++) {
+              const rIndex = 4 * (canvas.width * y + x);
+              const rValue = data[rIndex];
               if (rValue === 255) {
                   if (textLeft === 0) {
                       textLeft = x;
@@ -63,24 +63,23 @@
               }
           }
       }
-      var canvasVerticalCenterLine = canvas.width / 2;
-      var textVerticalCenterLine = (textRight - textLeft) / 2 + textLeft;
+      const canvasVerticalCenterLine = canvas.width / 2;
+      const textVerticalCenterLine = (textRight - textLeft) / 2 + textLeft;
       return {
           vertical: canvasHorizontalCenterLine - textHorizontalCenterLine,
           horizontal: canvasVerticalCenterLine - textVerticalCenterLine
       };
   }
 
-  var Logo = /** @class */ (function () {
-      function Logo(options) {
-          if (options === void 0) { options = defaults; }
-          var data = Object.assign({}, defaults, options);
+  class Logo {
+      constructor(options = defaults) {
+          const data = Object.assign({}, defaults, options);
           this.canvas =
               data.canvas != null ? data.canvas : document.createElement('canvas');
           this.createCanvas =
               data.createCanvas != null
                   ? data.createCanvas
-                  : function () { return document.createElement('canvas'); };
+                  : () => document.createElement('canvas');
           this.ctx = this.canvas.getContext('2d');
           this.width = data.width;
           this.height = data.height;
@@ -93,29 +92,30 @@
           this.canvas.width = 2 * this.width;
           this.canvas.height = 2 * this.height;
           if (typeof window !== 'undefined') {
-              this.canvas.style.width = "".concat(this.width, "px");
-              this.canvas.style.height = "".concat(this.height, "px");
+              this.canvas.style.width = `${this.width}px`;
+              this.canvas.style.height = `${this.height}px`;
           }
           this.ctx.scale(2, 2);
       }
-      Logo.prototype.drawLogo = function () {
+      drawLogo() {
           this.drawBackground();
           this.drawText();
           return this.canvas;
-      };
-      Logo.prototype.drawText = function () {
+      }
+      drawText() {
           this.ctx.fillStyle = this.fontColor;
-          this.ctx.font = "".concat(this.fontSize, "px ").concat(this.fontFamily);
+          this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
           this.ctx.textBaseline = 'alphabetic';
           this.ctx.textAlign = 'center';
-          var offsets = measureOffsets(this.text, this.fontFamily, this.fontSize, this.createCanvas);
-          var x = this.width / 2 + offsets.horizontal;
-          var y = this.height / 2 + offsets.vertical;
+          const offsets = measureOffsets(this.text, this.fontFamily, this.fontSize, this.createCanvas);
+          console.log('offsets', offsets);
+          const x = this.width / 2 + offsets.horizontal;
+          const y = this.height / 2 + offsets.vertical;
           this.ctx.fillText(this.text, x, y);
-      };
-      Logo.prototype.drawRounded = function () {
+      }
+      drawRounded() {
           this.ctx.beginPath();
-          var radius = this.height / 10;
+          const radius = this.height / 10;
           this.ctx.moveTo(this.width, this.height);
           this.ctx.arcTo(0, this.height, 0, 0, radius);
           this.ctx.arcTo(0, 0, this.width, 0, radius);
@@ -123,20 +123,20 @@
           this.ctx.arcTo(this.width, this.height, 0, this.height, radius);
           this.ctx.fillStyle = this.backgroundColor;
           this.ctx.fill();
-      };
-      Logo.prototype.drawSquare = function () {
+      }
+      drawSquare() {
           this.ctx.beginPath();
           this.ctx.rect(0, 0, this.width, this.height);
           this.ctx.fillStyle = this.backgroundColor;
           this.ctx.fill();
-      };
-      Logo.prototype.drawCircle = function () {
+      }
+      drawCircle() {
           this.ctx.beginPath();
           this.ctx.arc(this.width / 2, this.height / 2, this.height / 2, 0, 2 * Math.PI, false);
           this.ctx.fillStyle = this.backgroundColor;
           this.ctx.fill();
-      };
-      Logo.prototype.drawBackground = function () {
+      }
+      drawBackground() {
           switch (this.shape) {
               case 'square':
                   this.drawSquare();
@@ -151,13 +151,10 @@
                   this.drawSquare();
                   break;
           }
-      };
-      return Logo;
-  }());
+      }
+  }
 
-  exports.Logo = Logo;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
+  return Logo;
 
 }));
 //# sourceMappingURL=index.js.map

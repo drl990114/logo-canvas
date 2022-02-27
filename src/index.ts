@@ -1,10 +1,11 @@
 'use strict'
 
+import { Canvas } from 'canvas'
 import defaults, { noEmptyOptions, options, shape } from './default'
 import { measureOffsets } from './utils'
 
-export class Logo {
-  public canvas: HTMLCanvasElement
+class Logo {
+  public canvas: HTMLCanvasElement | Canvas
   public ctx: CanvasRenderingContext2D
   public width: number
   public height: number
@@ -36,14 +37,14 @@ export class Logo {
     this.canvas.width = 2 * this.width
     this.canvas.height = 2 * this.height
     if (typeof window !== 'undefined') {
-      this.canvas.style.width = `${this.width}px`
-      this.canvas.style.height = `${this.height}px`
+      ;(this.canvas as HTMLCanvasElement).style.width = `${this.width}px`
+      ;(this.canvas as HTMLCanvasElement).style.height = `${this.height}px`
     }
 
     this.ctx.scale(2, 2)
   }
 
-  drawLogo (): HTMLCanvasElement {
+  drawLogo (): HTMLCanvasElement | Canvas {
     this.drawBackground()
     this.drawText()
     return this.canvas
@@ -60,6 +61,8 @@ export class Logo {
       this.fontSize,
       this.createCanvas
     )
+
+    console.log('offsets', offsets)
     const x = this.width / 2 + offsets.horizontal
     const y = this.height / 2 + offsets.vertical
     this.ctx.fillText(this.text, x, y)
@@ -115,3 +118,4 @@ export class Logo {
     }
   }
 }
+export default Logo

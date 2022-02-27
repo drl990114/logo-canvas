@@ -1,6 +1,7 @@
+import { Canvas } from 'canvas';
 import { options, shape } from './default';
-export declare class Logo {
-    canvas: HTMLCanvasElement;
+declare class Logo {
+    canvas: HTMLCanvasElement | Canvas;
     ctx: CanvasRenderingContext2D;
     width: number;
     height: number;
@@ -12,10 +13,11 @@ export declare class Logo {
     fontSize: number;
     createCanvas: Function;
     constructor(options?: options);
-    drawLogo(): HTMLCanvasElement;
+    drawLogo(): HTMLCanvasElement | Canvas;
     drawText(): void;
     drawRounded(): void;
     drawSquare(): void;
     drawCircle(): void;
     drawBackground(): void;
 }
+export default Logo;

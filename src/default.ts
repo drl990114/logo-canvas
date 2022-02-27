@@ -1,3 +1,5 @@
+import { Canvas } from 'canvas'
+
 const defaults: options = {
   canvas: null,
   width: 128,
@@ -11,7 +13,7 @@ const defaults: options = {
 }
 export type shape = 'square' | 'circle' | 'rounded'
 export interface noEmptyOptions {
-  canvas: HTMLCanvasElement | null
+  canvas: HTMLCanvasElement | Canvas | null
   width: number
   height: number
   shape: shape
