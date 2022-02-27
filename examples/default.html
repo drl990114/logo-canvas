@@ -13,7 +13,18 @@
 </body>
 <script src="../dist/index.js"></script>
 <script>
-    const logo = new Logo.Logo()
+    const logo = new Logo({
+        canvas,
+        backgroundColor: 'blue',
+        text: 'canvas',
+        width: 256,
+        height: 128,
+        shape: "rounded",
+        fontColor: "white",
+        backgroundColor: "#C70039",
+        fontFamily: "Aladin",
+        fontSize: 80
+    })
 
     document.body.appendChild(logo.drawLogo())
 </script>
