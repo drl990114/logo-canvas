@@ -1,21 +1,36 @@
 #!/usr/bin/env node
-const fs = require('fs')
 const { createCanvas } = require('canvas')
-const { Logo } = require('../dist')
-const canvas = createCanvas(200, 200)
-const createCanvasEl = () => createCanvas(200, 200)
-const logo = new Logo({
+const fs = require('fs')
+const {
+  init,
+  hasOptionsFile,
+  wirteLogoFile,
+  wirteOptionsFile
+} = require('./utils')
+const canvas = createCanvas(400, 400)
+const createCanvasEl = () => createCanvas(400, 400)
+const optionsFileName = 'logo.json'
+const hasfile = hasOptionsFile(optionsFileName)
+let options = {
   canvas,
-  createCanvas: createCanvasEl,
-  backgroundColor: 'blue'
-})
-const png = logo.drawLogo()
-
-const buffer = png.toBuffer('image/png')
-try {
-  fs.writeFile('logo.png', buffer, (err) => {
-    if (err) throw new Error(String(err))
+  createCanvas: createCanvasEl
+}
+if (!hasfile) {
+  init().then((inputOptions) => {
+    options = {
+      ...options,
+      ...inputOptions
+    }
+    wirteOptionsFile(inputOptions)
+    wirteLogoFile(options)
   })
-} catch (err) {
-  console.log(err)
+} else {
+  fs.readFile(optionsFileName, (err, data) => {
+    const inputOptions = JSON.parse(Buffer(data).toString())
+    options = {
+      ...options,
+      ...inputOptions
+    }
+    wirteLogoFile(options)
+  })
 }

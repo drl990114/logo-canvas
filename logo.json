@@ -1,0 +1,10 @@
+{
+  "fontColor": "blue",
+  "backgroundColor": "#C70039",
+  "text": "logo",
+  "shape": "square",
+  "width": 128,
+  "height": 128,
+  "fontSize": 64,
+  "fontFamily": "Helvetica"
+}
