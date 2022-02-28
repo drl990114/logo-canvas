@@ -55,6 +55,7 @@
   "dependencies": {
     "@inquirer/input": "^0.0.17-alpha.0",
     "canvas": "^2.9.0",
-    "fs-extra": "^10.0.1"
+    "fs-extra": "^10.0.1",
+    "inquirer": "^8.2.0"
   }
 }
