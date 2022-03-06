@@ -5,9 +5,9 @@
 
 [npm-url]: https://npmjs.org/package/logo-canvas
 # logo-canvas
-Quickly generate images from text based on `canvas`. Supports command line interface and in-browser use.
+基于 `canvas` 根据文字快速生成图片，支持命令行界面和浏览器内使用。
 
-[简体中文](https://github.com/halodong/logo-canvas/blob/main/README.md)
+[English](https://github.com/halodong/logo-canvas/blob/main/README.md)
 
 ## Install
 
@@ -79,5 +79,5 @@ $ logo
 ```
 
 ## Problem
-For bugs or suggestions, you can submit via [create an issue](https://github.com/halodong/logo-canvas/issues/new).
+bug 或者建议，你可以通过 [create an issue](https://github.com/halodong/logo-canvas/issues/new) 提交.
 © 2022 GitHub, Inc.
