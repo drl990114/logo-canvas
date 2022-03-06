@@ -6,7 +6,6 @@ const path = require('path')
 const process = require('process')
 const { Canvas, registerFont } = require('canvas')
 
-
 // Initial options via user input
 // -----------------------------------------------------------------------------------
 async function init() {
@@ -18,7 +17,14 @@ async function init() {
     message: 'Enter backgroundColor',
     default: '#C70039'
   })
-  const shape = await input({ message: 'Enter shape', default: 'square' })
+  const shape = await prompt([
+    {
+      type: 'list',
+      name: 'shape',
+      message: 'Enter shape',
+      choices: ['square', 'circle', 'rounded']
+    }
+  ])
   const width = await input({ message: 'Enter width', default: 128 })
   const height = await input({ message: 'Enter height', default: 128 })
   const fontSize = await input({ message: 'Enter fontSize', default: 64 })
@@ -40,11 +46,11 @@ async function init() {
     fontColor,
     backgroundColor,
     text,
-    shape,
     width,
     height,
     fontSize,
-    ...fontFamily
+    ...fontFamily,
+    ...shape
   }
 }
 
@@ -61,7 +67,6 @@ function getFnOptions(width, height) {
   }
 }
 
-
 // font
 // -----------------------------------------------------------------------------------
 async function getFontList() {
@@ -71,7 +76,6 @@ async function getFontList() {
 function registFont(font) {
   registerFont(`./fonts/${font}.ttf`, { family: font })
 }
-
 
 // writefile
 // -----------------------------------------------------------------------------------
