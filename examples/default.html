@@ -12,21 +12,28 @@
     <canvas id='canvas'></canvas>
 </body>
 <script src="../dist/index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
 <script>
-    const logo = new Logo({
-        canvas,
-        backgroundColor: 'blue',
-        text: 'canvas',
-        width: 256,
-        height: 128,
-        shape: "rounded",
-        fontColor: "white",
-        backgroundColor: "#C70039",
-        fontFamily: "Aladin",
-        fontSize: 80
-    })
-
-    document.body.appendChild(logo.drawLogo())
+    WebFont.load({
+        google: {
+            families: ["Tangerine"]
+        },
+        active: function () {
+            const logo = new Logo({
+                canvas,
+                backgroundColor: 'blue',
+                text: 'canvas',
+                width: 200,
+                height: 90,
+                shape: "rounded",
+                fontColor: "white",
+                backgroundColor: "#C70039",
+                fontFamily: "Tangerine",
+                fontSize: 80
+            })
+            document.body.appendChild(logo.drawLogo())
+        }
+    });
 </script>
 
 </html>
