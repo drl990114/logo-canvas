@@ -1,10 +1,10 @@
 {
   "fontColor": "white",
   "backgroundColor": "#C70039",
-  "text": "logo-canvas",
-  "width": 600,
-  "height": 128,
-  "fontSize": 64,
+  "text": "logo",
+  "width": 128,
+  "height": 64,
+  "fontSize": 32,
   "fontFamily": "Blocked",
   "shape": "rounded"
 }
