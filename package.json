@@ -1,8 +1,7 @@
 {
   "name": "logo-canvas",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.0",
+  "main": "dist/index.js",
   "bin": {
     "logo": "./bin/logo.js"
   },
