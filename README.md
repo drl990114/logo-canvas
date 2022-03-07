@@ -7,7 +7,7 @@
 # logo-canvas
 Quickly generate images from text based on `canvas`. Supports command line interface and in-browser use.
 
-[简体中文](https://github.com/halodong/logo-canvas/blob/main/README.md)
+[简体中文](https://github.com/halodong/logo-canvas/blob/main/README-cn.md)
 
 ## Install
 
