@@ -1,5 +1,5 @@
 [![LICENSE](https://img.shields.io/github/license/halodong/logo-canvas?style=flat-square)](./LICENSE)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/karma-runner/karma-coverage)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/halodong/logo-canvas)
 [![NPM Version](https://img.shields.io/npm/v/logo-canvas.svg)](npm-url)
 [![Build Status](https://app.travis-ci.com/halodong/logo-canvas.svg?branch=main)](https://www.travis-ci.com)
 
