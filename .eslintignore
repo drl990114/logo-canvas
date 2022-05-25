@@ -8,3 +8,6 @@ bin/bin
 bin/src
 bin/logo.js
 bin
+
+*.json
+*.md
